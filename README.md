@@ -41,16 +41,16 @@ cd my-401k-app
 - **Linux:** Use package manager
 
 Start PostgreSQL:
-
+```bash
 brew services start postgresql
-
+```
 Create the database:
-
+```bash
 createdb retirementsim
-
+```
 
 Create the table:
-
+```bash
 psql retirementsim
 
 CREATE TABLE contribution_rates (
@@ -60,20 +60,23 @@ CREATE TABLE contribution_rates (
     amount NUMERIC NOT NULL
 );
 \q
+```
 
 
 ---
 
 ### 3. Setup the Backend
 
+```bash
 cd server
 npm install
-
+```
 
 Create `.env` in `server` folder:
+```bash
 DATABASE_URL=postgresql://YOUR_DB_USER:YOUR_PASSWORD@localhost:5432/retirementsim
 PORT=3001
-
+```
 Replace `YOUR_DB_USER` and `YOUR_PASSWORD` with your local PostgreSQL user credentials.
 
 Start backend:
@@ -81,13 +84,14 @@ Start backend:
 ---
 
 ### 4. Setup the Frontend
-
+```bash
 cd ../client
 npm install
-
+```
 Start frontend:
+```bash
 npm run dev
-
+```
 
 - Frontend at [http://localhost:5173](http://localhost:5173)
 - Backend at [http://localhost:3001](http://localhost:3001)
