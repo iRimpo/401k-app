@@ -14,6 +14,7 @@ interface ContributionCardProps {
   onContributionTypeChange: (type: 'dollar' | 'percentage') => void;
   onContributionAmountChange: (amount: number) => void;
   salary: number;
+  onSave?: () => void;
 }
 
 export const ContributionCard = ({
@@ -22,6 +23,7 @@ export const ContributionCard = ({
   onContributionTypeChange,
   onContributionAmountChange,
   salary,
+  onSave
 }: ContributionCardProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,7 +40,7 @@ export const ContributionCard = ({
     }
   }, []);
 
-  const handleSave = () => {
+    const handleSave = async () => {
     setIsLoading(true);
     try {
       localStorage.setItem('contributionType', contributionType);
@@ -48,6 +50,9 @@ export const ContributionCard = ({
         description: "Your contribution preferences have been updated successfully.",
         icon: <Save className="h-5 w-5 text-primary" />
       });
+
+      // Call parent save logic if provided
+      if (onSave) await onSave();
     } catch (error) {
       console.error('Error saving settings:', error);
       toast.error("Error", {
@@ -57,6 +62,7 @@ export const ContributionCard = ({
       setIsLoading(false);
     }
   };
+
 
   const maxDollar = Math.floor(salary / 26); // Biweekly
   const maxPercentage = 100;
