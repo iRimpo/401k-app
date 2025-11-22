@@ -1,16 +1,24 @@
 import './App.css'
 
-import { Button } from "@/components/ui/button"
+import React, { useState } from "react";
+import { ContributionTypeToggle} from "@/components/ui/ContributionTypeToggle";
+import type { ContributionType } from "@/components/ui/ContributionTypeToggle";
 
 function App() {
+  const [contributionType, setContributionType] = useState<ContributionType>("percent");
+
   return (
-    <div>
-      <h1>401(k) Contribution Manager</h1>
-      <Button onClick={() => alert('Button clicked!')}>
-        Save Contribution Rate
-      </Button>
+    <div className="p-8 max-w-md mx-auto">
+      <h2 className="text-xl font-bold mb-2">Contribution Settings</h2>
+      <p className="text-muted-foreground mb-4">
+        Choose how you’d like to contribute to your 401(k)
+      </p>
+      <span className="block font-medium mb-2">Contribution Type</span>
+      <ContributionTypeToggle value={contributionType} onChange={setContributionType} />
+      {/* Continue with inputs for percentage/dollar, etc. */}
     </div>
   );
 }
+
 
 export default App
