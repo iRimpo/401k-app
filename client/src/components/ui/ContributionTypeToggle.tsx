@@ -68,7 +68,7 @@ export const ContributionCard = ({
     <Card className="shadow-lg">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Save className="h-5 w-5 text-primary" />
+          <Save className="h-5 w-5 text-primary " />
           Contribution Settings
         </CardTitle>
         <CardDescription>
@@ -97,7 +97,7 @@ export const ContributionCard = ({
         </div>
 
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between min-w-[500px]">
             <Label>
               {contributionType === 'percentage' 
                 ? 'Contribution Percentage' 
