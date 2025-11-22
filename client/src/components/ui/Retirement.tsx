@@ -82,32 +82,32 @@ export const RetirementProjection = ({
           <Calculator className="h-5 w-5 text-primary" />
           Retirement Projection
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-left">
           See how your savings will grow by age {retirementAge}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-4">
           <div className="p-4 rounded-lg bg-primary/10 border-2 border-primary/20">
-            <p className="text-sm text-muted-foreground mb-1">Projected Balance at {retirementAge}</p>
-            <p className="text-3xl font-bold text-primary">
+            <p className="text-left text-sm text-muted-foreground mb-1">Projected Balance at {retirementAge}</p>
+            <p className="text-left text-3xl font-bold text-primary">
               ${projectedValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}
             </p>
           </div>
 
-          <div className="p-4 rounded-lg bg-accent/10 border-2 border-accent/20">
+          <div className="p-4 rounded-lg bg-green-200 border-2 border-green-600">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm text-muted-foreground mb-1">
+                <p className="text-left text-sm text-muted-foreground mb-1">
                   If you save 1% more per year
                 </p>
-                <p className="text-2xl font-bold text-accent">
+                <p className="text-left text-green-600 text-2xl font-bold text-accent">
                   +${additionalValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                 </p>
               </div>
-              <TrendingUp className="h-8 w-8 text-accent" />
+              <TrendingUp className="h-8 w-8 text-accent text-green-600" />
             </div>
-            <p className="text-xs text-muted-foreground mt-2">
+            <p className="text-left text-xs text-muted-foreground mt-2">
               That's an extra ${(additionalValue / yearsToRetirement).toLocaleString(undefined, { maximumFractionDigits: 0 })} per year
             </p>
           </div>
@@ -137,14 +137,14 @@ export const RetirementProjection = ({
                 <Line 
                   type="monotone" 
                   dataKey="current" 
-                  stroke="var(--color-current)"
+                  stroke="#2563eb" 
                   strokeWidth={3}
                   dot={false}
                 />
                 <Line 
                   type="monotone" 
                   dataKey="increased" 
-                  stroke="var(--color-increased)"
+                  stroke="#16a34a"
                   strokeWidth={3}
                   dot={false}
                   strokeDasharray="5 5"

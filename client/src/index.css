@@ -17,14 +17,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: oklch(75.209% 0.16909 159.324);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(52.337% 0.24594 263.606);
-  --primary-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(53.482% 0.22769 263.79);
+  --primary-foreground: oklch(94.912% 0.00011 271.152);
   --secondary: oklch(0.968 0.007 247.896);
   --secondary-foreground: oklch(0.208 0.042 265.755);
   --muted: oklch(0.968 0.007 247.896);
