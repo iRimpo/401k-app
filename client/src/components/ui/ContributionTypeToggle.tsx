@@ -97,7 +97,7 @@ export const ContributionCard = ({
         </div>
 
         <div className="space-y-4">
-          <div className="flex items-center justify-between min-w-[500px]">
+          <div className="flex items-center justify-between min-w-[300px]">
             <Label>
               {contributionType === 'percentage' 
                 ? 'Contribution Percentage' 
