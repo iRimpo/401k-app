@@ -23,8 +23,8 @@ This project is a full-stack demo for configuring 401(k) retirement contribution
 - **Other:** Sonner (toast), Lucide icons
 
 ---
-
-The frontend React app handles all user interaction and sends requests through a REST API.
+## Architecture
+- The frontend React app handles all user interaction and sends requests through a REST API.
 - The Express backend receives those requests, applies the business logic, and reads/writes data.
 - The PostgreSQL database stores all persistent user settings and contribution data.
 
