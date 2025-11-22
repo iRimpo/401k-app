@@ -71,7 +71,7 @@ export const ContributionCard = ({
           <Save className="h-5 w-5 text-primary " />
           Contribution Settings
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-left">
           Choose how you'd like to contribute to your 401(k)
         </CardDescription>
       </CardHeader>

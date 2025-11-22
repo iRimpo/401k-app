@@ -13,14 +13,14 @@ export const Navbar = () => {
           </div>
           <div>
             <h1 className="text-xl font-bold text-foreground">Human Interest</h1>
-            <p className="text-xs text-muted-foreground">401(k) Management</p>
+            <p className="text-left text-xs text-muted-foreground">401(k) Management</p>
           </div>
         </div>
         
         <div className="flex items-center gap-2">
           <div className="text-right hidden sm:block">
-            <p className="text-sm font-medium text-foreground">John Doe</p>
-            <p className="text-xs text-muted-foreground">Employee ID: EMP-12345</p>
+            <p className="text-sm font-medium text-foreground">Richard Azucenas</p>
+            <p className="text-xs text-muted-foreground">ID: EMP-12345</p>
           </div>
         </div>
       </div>
