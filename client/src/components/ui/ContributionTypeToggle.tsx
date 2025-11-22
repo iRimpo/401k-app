@@ -1,36 +1,71 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Save, Percent, DollarSign } from "lucide-react"; // If using lucide for icons
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DollarSign, Percent, Save } from "lucide-react";
+import { toast } from "sonner";
 
-interface Props {
-  contributionType: "percentage" | "dollar";
+interface ContributionCardProps {
+  contributionType: 'dollar' | 'percentage';
   contributionAmount: number;
-  sliderMax: number;
-  sliderStep: number;
-  isLoading: boolean;
-  salary: number;
-  onContributionTypeChange: (type: "percentage" | "dollar") => void;
+  onContributionTypeChange: (type: 'dollar' | 'percentage') => void;
   onContributionAmountChange: (amount: number) => void;
-  handleSave: () => void;
+  salary: number;
 }
 
-export function ContributionSettingsCard({
+export const ContributionCard = ({
   contributionType,
   contributionAmount,
-  sliderMax,
-  sliderStep,
-  isLoading,
-  salary,
   onContributionTypeChange,
   onContributionAmountChange,
-  handleSave,
-}: Props) {
+  salary,
+}: ContributionCardProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Load saved settings from localStorage on mount
+  useEffect(() => {
+    const savedType = localStorage.getItem('contributionType');
+    const savedAmount = localStorage.getItem('contributionAmount');
+    
+    if (savedType) {
+      onContributionTypeChange(savedType as 'dollar' | 'percentage');
+    }
+    if (savedAmount) {
+      onContributionAmountChange(parseFloat(savedAmount));
+    }
+  }, []);
+
+  const handleSave = () => {
+    setIsLoading(true);
+    try {
+      localStorage.setItem('contributionType', contributionType);
+      localStorage.setItem('contributionAmount', contributionAmount.toString());
+
+      toast.success("Settings Saved", {
+        description: "Your contribution preferences have been updated successfully.",
+        icon: <Save className="h-5 w-5 text-primary" />
+      });
+    } catch (error) {
+      console.error('Error saving settings:', error);
+      toast.error("Error", {
+        description: "Failed to save your settings. Please try again.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const maxDollar = Math.floor(salary / 26); // Biweekly
+  const maxPercentage = 100;
+
+  const sliderMax = contributionType === 'dollar' ? maxDollar : maxPercentage;
+  const sliderStep = contributionType === 'dollar' ? 50 : 0.5;
+
   return (
-    <Card className="shadow-lg max-w-md mx-auto">
+    <Card className="shadow-lg">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Save className="h-5 w-5 text-primary" />
@@ -43,9 +78,9 @@ export function ContributionSettingsCard({
       <CardContent className="space-y-6">
         <div className="space-y-2">
           <Label>Contribution Type</Label>
-          <Tabs
-            value={contributionType}
-            onValueChange={(val) => onContributionTypeChange(val as "percentage" | "dollar")}
+          <Tabs 
+            value={contributionType} 
+            onValueChange={(value) => onContributionTypeChange(value as 'dollar' | 'percentage')}
             className="w-full"
           >
             <TabsList className="grid w-full grid-cols-2">
@@ -60,12 +95,13 @@ export function ContributionSettingsCard({
             </TabsList>
           </Tabs>
         </div>
+
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <Label>
-              {contributionType === "percentage"
-                ? "Contribution Percentage"
-                : "Contribution Amount (per paycheck)"}
+              {contributionType === 'percentage' 
+                ? 'Contribution Percentage' 
+                : 'Contribution Amount (per paycheck)'}
             </Label>
             <div className="flex items-center gap-2">
               <Input
@@ -78,10 +114,11 @@ export function ContributionSettingsCard({
                 step={sliderStep}
               />
               <span className="text-muted-foreground">
-                {contributionType === "percentage" ? "%" : "$"}
+                {contributionType === 'percentage' ? '%' : '$'}
               </span>
             </div>
           </div>
+
           <Slider
             value={[contributionAmount]}
             onValueChange={([value]) => onContributionAmountChange(value)}
@@ -89,44 +126,45 @@ export function ContributionSettingsCard({
             step={sliderStep}
             className="w-full"
           />
+
           <div className="flex justify-between text-sm text-muted-foreground">
-            <span>0{contributionType === "percentage" ? "%" : "$"}</span>
-            <span>
-              {sliderMax}
-              {contributionType === "percentage" ? "%" : "$"}
-            </span>
+            <span>0{contributionType === 'percentage' ? '%' : '$'}</span>
+            <span>{sliderMax}{contributionType === 'percentage' ? '%' : '$'}</span>
           </div>
         </div>
-        {contributionType === "percentage" && (
+
+        {contributionType === 'percentage' && (
           <div className="rounded-lg bg-muted p-4">
-            <p className="text-sm text-muted-foreground">
-              Per paycheck contribution:{" "}
+            <p className="text-left text-sm text-muted-foreground">
+              Per paycheck contribution:{' '}
               <span className="font-semibold text-foreground">
                 ${((salary / 26) * (contributionAmount / 100)).toFixed(2)}
               </span>
             </p>
           </div>
         )}
-        {contributionType === "dollar" && (
+
+        {contributionType === 'dollar' && (
           <div className="rounded-lg bg-muted p-4">
-            <p className="text-sm text-muted-foreground">
-              Percentage of salary:{" "}
+            <p className="text-left text-sm text-muted-foreground">
+              Percentage of salary:{' '}
               <span className="font-semibold text-foreground">
                 {((contributionAmount / (salary / 26)) * 100).toFixed(2)}%
               </span>
             </p>
           </div>
         )}
-        <Button
-          onClick={handleSave}
+
+        <Button 
+          onClick={handleSave} 
           disabled={isLoading}
           className="w-full"
           size="lg"
         >
           <Save className="mr-2 h-4 w-4" />
-          {isLoading ? "Saving..." : "Save Changes"}
+          {isLoading ? 'Saving...' : 'Save Changes'}
         </Button>
       </CardContent>
     </Card>
   );
-}
+};
