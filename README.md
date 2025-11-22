@@ -24,6 +24,14 @@ This project is a full-stack demo for configuring 401(k) retirement contribution
 
 ---
 
+The frontend React app handles all user interaction and sends requests through a REST API.
+- The Express backend receives those requests, applies the business logic, and reads/writes data.
+- The PostgreSQL database stores all persistent user settings and contribution data.
+
+Whenever I change my contribution settings on the UI, the request flows from React → Express → PostgreSQL, and the updated data flows back to the frontend to update the dashboard in real time.
+
+---
+
 ## Getting Started
 
 ### 1. Clone the Repository
